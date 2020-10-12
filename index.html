@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quick Pick</title>
+        <meta charset="utf8">
+        <style>
+            div {
+                font-size: larger;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="quickPick"></div>
+        <div id="quickluckyball"></div>
+        <p></p>
+        <div id="winningNumber"></div>
+        <div id="winningLucky"></div>
+        <p></p>
+        <div id="winMessage"></div>
+        <script>
+            // INPUT: array representing quick pick numbers,
+            //        variable representing quick pick lucky ball
+            //        variable representing winning numbers
+            //        variable representing winning lucky ball
+            // 
+            //  OUTPUT: a string that contains the message to be displaced
+
+            function calculateMoneyWon(quickPick, quickLuckyball, winningNumbers, winningLuckyball){
+                winningNumbers = winningNumbers.split(' ')
+
+                for (var i = 0; i < 5; i++){
+                    winningNumbers[i] = parseInt(winningNumbers[i])
+                }
+
+                // find all numbers that match and store them in an array
+                var common = quickPick.filter(x => winningNumbers.indexOf(x) !== -1)
+
+                // number of matches is equivalent to the length of common
+                countMatches = common.length
+
+                
+                // condition statement to determine how much we won
+                if (countMatches == 5 && quickLuckyball == winningLuckyball){
+                    return "You win! Your payout is: 7,000 a WEEK for LIFE"
+                }
+                else if (countMatches == 5) {
+                    return "You win! Your payout is: 25,000 a YEAR for LIFE"
+                }
+                else if (countMatches == 4 && quickLuckyball == winningLuckyball) {
+                    return "You win! Your payout is: 5,000"
+                }
+                else if (countMatches == 4) {
+                    return "You win! Your payout is: 200"
+                }
+                else if (countMatches == 3 && quickLuckyball == winningLuckyball){
+                    return "You win! Your payout is: 150"
+                }
+                else if (countMatches == 3 ){
+                    return "You win! Your payout is: 20"
+                }
+                else if (countMatches == 2 && quickLuckyball == winningLuckyball){
+                    return "You win! Your payout is: 25"
+                }
+                else if (countMatches == 2){
+                    return "You win! Your payout is: 3"
+                }
+                else if (countMatches == 1 && quickLuckyball == winningLuckyball){
+                    return "You win! Your payout is: 6"
+                }
+                else if (countMatches == 0 && quickLuckyball == winningLuckyball){
+                    return "You win! Your payout is: 4"
+                }
+                else {
+                    return "You did NOT win."
+                }
+            }
+
+            var randValues = new Array(5)
+            var max1 = 48
+            var min = 1
+            var max2 = 18
+            // select 5 random numbers from 1 to 48
+            for (var i = 0; i < 5; i++){
+                
+                randValues[i] = Math.floor(Math.random() * (max1 - min + 1) + min)
+            }
+
+            luckyball = Math.floor(Math.random() * (max2 - min + 1) + min)
+
+            // sort in ascending order
+            randValues.sort(function(a, b){return a - b});
+            
+            // receive inputs from the user
+            winningNumbers = prompt("Enter winning numbers separated by a space")
+            winningLuckyball = prompt("Enter lucky ball")
+
+            // generate output strings
+            document.getElementById("quickPick").innerText = "The quick pick numbers are: " + String(randValues)
+            document.getElementById("quickluckyball").innerText = "The lucky ball number is: " +  luckyball
+            document.getElementById("winningNumber").innerText = "The winning numbers are: " + winningNumbers
+            document.getElementById("winningLucky").innerText = "The lucky ball number is: "+  winningLuckyball
+
+            // retrieve the game results
+            document.getElementById("winMessage").innerText = calculateMoneyWon(randValues, luckyball, winningNumbers, winningLuckyball)
+
+        </script>
+    </body>
+</html>
